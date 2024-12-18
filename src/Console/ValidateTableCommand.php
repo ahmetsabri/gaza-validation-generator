@@ -27,7 +27,7 @@ class ValidateTableCommand extends Command
     public function handle()
     {
         $tableName = $this->argument('tableName');
-        $exclude = ['id','created_at','updated_at','deleted_at'];
+        $exclude = ['id','uuid','ulid','created_at','updated_at','deleted_at'];
         if (!Schema::hasTable($tableName)) {
             $this->error("Table '{$tableName}' does not exist.");
             return;
