@@ -1,0 +1,96 @@
+{
+    "price": [
+        "numeric",
+        "gt:0"
+    ],
+    "email": [
+        "email",
+        "max:255"
+    ],
+    "password": [
+        "string",
+        "min:8"
+    ],
+    "name": [
+        "string",
+        "max:255"
+    ],
+    "age": [
+        "integer",
+        "min:0"
+    ],
+    "date_of_birth": [
+        "date",
+        "before:today"
+    ],
+    "quantity": [
+        "integer",
+        "min:0"
+    ],
+    "url": [
+        "url"
+    ],
+    "slug": [
+        "string",
+        "max:255",
+        "unique:table,slug"
+    ],
+    "description": [
+        "string",
+        "max:500"
+    ],
+    "title": [
+        "string",
+        "max:255"
+    ],
+    "image": [
+        "image",
+        "max:2048"
+    ],
+    "amount": [
+        "numeric",
+        "gte:0"
+    ],
+    "percentage": [
+        "numeric",
+        "between:0,100"
+    ],
+    "zipcode": [
+        "string",
+        "regex:/^\\d{5}(-\\d{4})?$/"
+    ],
+    "category_id": [
+        "exists:categories,id"
+    ],
+    "is_active": [
+        "boolean"
+    ],
+    "weight": [
+        "numeric",
+        "gte:0"
+    ],
+    "width": [
+        "numeric",
+        "gte:0"
+    ],
+    "height": [
+        "numeric",
+        "gte:0"
+    ],
+    "length": [
+        "numeric",
+        "gte:0"
+    ],
+    "volume": [
+        "numeric",
+        "gte:0"
+    ],
+    "distance": [
+        "numeric",
+        "gte:0"
+    ],
+    "discount": [
+        "numeric",
+        "between:0,100"
+    ]
+}
