@@ -12,6 +12,11 @@
     "authors": [
         {
             "name": "Ahmed Sabry"
+        },
+        {
+            "name": "Michael Flynn",
+            "email": "flynnmj@devnoise.com",
+            "homepage": "https://github.com/devNoiseConsulting"
         }
     ],
     "require": {
