@@ -27,9 +27,10 @@ class ValidateTableCommand extends Command
     public function handle()
     {
         $tableName = $this->argument('tableName');
-        $exclude = ['id','uuid','ulid','created_at','updated_at','deleted_at'];
-        if (!Schema::hasTable($tableName)) {
+        $exclude = ['id', 'uuid', 'ulid', 'created_at', 'updated_at', 'deleted_at'];
+        if (! Schema::hasTable($tableName)) {
             $this->error("Table '{$tableName}' does not exist.");
+
             return;
         }
 
@@ -73,7 +74,7 @@ class ValidateTableCommand extends Command
 
         // Output validation array
         $this->info("Validation rules for table '{$tableName}':");
-        $output = str_replace(['":','{','}'], ['" =>','[',']'], json_encode($validationRules, JSON_PRETTY_PRINT));
+        $output = str_replace(['":', '{', '}'], ['" =>', '[', ']'], json_encode($validationRules, JSON_PRETTY_PRINT));
 
         $this->line($output);
     }

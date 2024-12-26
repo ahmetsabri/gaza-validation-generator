@@ -2,8 +2,8 @@
 
 namespace Gaza\ValidationGenerator;
 
-use Illuminate\Support\ServiceProvider;
 use Gaza\ValidationGenerator\Console\ValidateTableCommand;
+use Illuminate\Support\ServiceProvider;
 
 class ValidationGeneratorServiceProvider extends ServiceProvider
 {
