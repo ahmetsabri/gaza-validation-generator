@@ -22,105 +22,37 @@ class ValidateTableCommand extends Command
     protected $description = 'Generate a validation array for the specified table';
 
     /**
-     * The laravel validation rule to map column types to.
-     *
-     * @var array
-     */
-    protected $columnTypeRules = [
-        '_varchar' => 'string',
-        'bigint' => 'integer',
-        'bigserial' => 'integer',
-        // 'binary' => '',
-        'binary_double' => 'numeric',
-        'binary_float' => 'numeric',
-        'binary_integer' => 'integer',
-        'bit' => 'boolean',
-        // 'blob' => '',
-        'bool' => 'boolean',
-        'boolean' => 'boolean',
-        'bpchar' => 'string',
-        // 'bytea' => '',
-        'char' => 'string',
-        'character' => 'string',
-        'clob' => 'string',
-        'date' => 'date',
-        'datetime' => 'date',
-        'datetime2' => 'date',
-        'datetimeoffset' => 'date',
-        'decimal' => 'numeric',
-        'double' => 'numeric',
-        'double precision' => 'numeric',
-        'float' => 'numeric',
-        'float4' => 'numeric',
-        'float8' => 'numeric',
-        // 'image' => '',
-        'inet' => 'string',
-        'int' => 'integer',
-        'int2' => 'integer',
-        'int4' => 'integer',
-        'int8' => 'integer',
-        'integer' => 'integer',
-        'interval' => 'string',
-        'json' => 'array',
-        'jsonb' => 'array',
-        'long' => 'string',
-        // 'long raw' => '',
-        // 'longblob' => '',
-        'longtext' => 'string',
-        'longvarchar' => 'string',
-        // 'mediumblob' => '',
-        'mediumint' => 'integer',
-        'mediumtext' => 'string',
-        'money' => 'numeric',
-        'nchar' => 'string',
-        'nclob' => 'string',
-        'ntext' => 'string',
-        'number' => 'integer',
-        'numeric' => 'numeric',
-        'nvarchar' => 'string',
-        'nvarchar2' => 'string',
-        'pls_integer' => 'boolean',
-        // 'raw' => '',
-        'real' => 'numeric',
-        'rowid' => 'string',
-        'serial' => 'integer',
-        'serial4' => 'integer',
-        'serial8' => 'integer',
-        'set' => 'array',
-        'smalldatetime' => 'date',
-        'smallint' => 'integer',
-        'smallmoney' => 'integer',
-        'string' => 'string',
-        'text' => 'string',
-        'time' => 'date_format:H:i',
-        'timestamp' => 'date',
-        'timestamptz' => 'date',
-        'timetz' => 'date_format:H:i',
-        // 'tinyblob' => '',
-        'tinyint' => 'integer',
-        'tinytext' => 'string',
-        'tsvector' => 'string',
-        'uniqueidentifier' => 'uuid',
-        'urowid' => 'string',
-        'uuid' => 'uuid',
-        // 'varbinary' => '',
-        'varchar' => 'string',
-        'varchar2' => 'string',
-        'year' => 'date',
-    ];
-
-    /**
      * Execute the console command.
      */
     public function handle()
     {
         $tableName = $this->argument('tableName');
-        $exclude = ['id', 'uuid', 'ulid', 'created_at', 'updated_at', 'deleted_at'];
         if (! Schema::hasTable($tableName)) {
             $this->error("Table '{$tableName}' does not exist.");
 
             return;
         }
+
+        // Get the rule file path
+        $filePath = __DIR__ . '/../../resources/data/validationGeneratorConfig.json';
+        if (! file_exists($filePath)) {
+            $this->error('Rule file not found.');
+
+            return;
+        }
+
+        // Read and process the JSON file
+        $jsonContent = file_get_contents($filePath);
+        $configData = json_decode($jsonContent, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->error('Invalid JSON format.');
+
+            return;
+        }
+
+        $exclude = $configData['exclude'];
+        $columnTypeRules = $configData['columnTypeRules'];
 
         // Get table columns
         $columns = Schema::getColumns($tableName);
@@ -141,11 +73,10 @@ class ValidateTableCommand extends Command
 
             // Add type-specific rules
             $typeName = strtolower($column['type_name']);
-            if (array_key_exists($typeName, $this->columnTypeRules)) {
-                $rules[] = $this->columnTypeRules[$typeName];
+            if (array_key_exists($typeName, $columnTypeRules)) {
+                $rules[] = $columnTypeRules[$typeName];
             }
             if (in_array('string', $rules)) {
-
                 if (preg_match('/\((\d+)\)/', $column['type'], $matches)) {
                     $rules[] = 'max:' . $matches[1];
                 }
