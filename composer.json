@@ -21,10 +21,7 @@
     ],
     "require": {
         "php": "^8.2|^8.3|^8.4",
-        "illuminate/console": "^10|^11",
-        "illuminate/contracts": "^10|^11",
-        "illuminate/database": "^10|^11",
-        "illuminate/support": "^10|^11"
+        "laravel/framework": "^10|^11"
     },
     "require-dev": {
         "laravel/pint": "^1.18",
