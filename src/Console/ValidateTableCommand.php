@@ -34,7 +34,11 @@ class ValidateTableCommand extends Command
         }
 
         // Get the rule file path
-        $filePath = __DIR__ . '/../../resources/data/validationGeneratorConfig.json';
+        $filePath = resource_path('vendor/gaza-validation-generator/validationGeneratorConfig.json');
+        if (! file_exists($filePath)) {
+            $filePath = __DIR__ . '/../../resources/data/validationGeneratorConfig.json';
+        }
+
         if (! file_exists($filePath)) {
             $this->error('Rule file not found.');
 

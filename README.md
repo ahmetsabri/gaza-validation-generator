@@ -1,4 +1,5 @@
 # **🇵🇸Free Palestine🇵🇸**
+
 # Gaza Validation Generator
 
 **Gaza Validation Generator** is a Laravel package designed to simplify the creation of validation rules for database tables. This package dynamically generates a validation array based on the schema of a specified table, helping you reduce manual effort and improve consistency.
@@ -71,7 +72,13 @@ Will output:
 
 ## Customization
 
-This package is designed to work out of the box, but you can extend or modify it if needed by editing the command class or contributing to the package.
+This package is designed to work out of the box, but you can extend or modify it if needed by publishing the config file.
+
+```bash
+php artisan vendor:publish
+```
+
+Select the `Provider: Gaza\ValidationGenerator\ValidationGeneratorServiceProvider` option. Then edit the `resources/vendor/gaza-validation-generator/validationGeneratorConfig.json` to match your database's column types.
 
 ---
 
@@ -89,13 +96,13 @@ This package is open-source and licensed under the [MIT License](https://opensou
 
 ## Support
 
-For issues or questions, please open an issue on the [GitHub repository](https://github.com/ahmetsabri/gaza-validation-generator) or contact the maintainer at **ahmedmahfouzjob@gmail.com**.
-
+For issues or questions, please open an issue on the [GitHub repository](https://github.com/ahmetsabri/gaza-validation-generator) or contact the maintainer at **<ahmedmahfouzjob@gmail.com>**.
+d
 ---
 
 ## Credits
 
-Developed with ❤️ 
+Developed with ❤️
 
 ---
 

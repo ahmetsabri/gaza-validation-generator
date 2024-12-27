@@ -78,5 +78,17 @@
         "varchar": "string",
         "varchar2": "string",
         "year": "date"
-    }
+    },
+    "columnTypesWithOutRule": [
+        "binary",
+        "blob",
+        "bytea",
+        "image",
+        "long raw",
+        "longblob",
+        "mediumblob",
+        "raw",
+        "tinyblob",
+        "varbinary"
+    ]
 }

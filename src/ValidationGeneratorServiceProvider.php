@@ -22,6 +22,8 @@ class ValidationGeneratorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__ . '/../resources/data/validationGeneratorConfig.json' => resource_path('vendor/gaza-validation-generator/validationGeneratorConfig.json'),
+        ]);
     }
 }
