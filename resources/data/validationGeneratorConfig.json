@@ -31,7 +31,7 @@
         "float": "numeric",
         "float4": "numeric",
         "float8": "numeric",
-        "inet": "string",
+        "inet": "ip",
         "int": "integer",
         "int2": "integer",
         "int4": "integer",
