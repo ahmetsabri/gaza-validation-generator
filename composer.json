@@ -12,9 +12,21 @@
     "authors": [
         {
             "name": "Ahmed Sabry"
+        },
+        {
+            "name": "Michael Flynn",
+            "email": "flynnmj@devnoise.com",
+            "homepage": "https://github.com/devNoiseConsulting"
         }
     ],
-    "require": {},
+    "require": {
+        "php": "^8.2|^8.3|^8.4",
+        "laravel/framework": "^10|^11"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.18",
+        "tightenco/duster": "^2.7"
+    },
     "extra": {
         "laravel": {
             "providers": [

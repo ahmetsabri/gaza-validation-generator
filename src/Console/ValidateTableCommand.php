@@ -27,11 +27,36 @@ class ValidateTableCommand extends Command
     public function handle()
     {
         $tableName = $this->argument('tableName');
-        $exclude = ['id','uuid','ulid','created_at','updated_at','deleted_at'];
-        if (!Schema::hasTable($tableName)) {
+        if (! Schema::hasTable($tableName)) {
             $this->error("Table '{$tableName}' does not exist.");
+
             return;
         }
+
+        // Get the rule file path
+        $filePath = resource_path('vendor/gaza-validation-generator/validationGeneratorConfig.json');
+        if (! file_exists($filePath)) {
+            $filePath = __DIR__ . '/../../resources/data/validationGeneratorConfig.json';
+        }
+
+        if (! file_exists($filePath)) {
+            $this->error('Rule file not found.');
+
+            return;
+        }
+
+        // Read and process the JSON file
+        $jsonContent = file_get_contents($filePath);
+        $configData = json_decode($jsonContent, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->error('Invalid JSON format.');
+
+            return;
+        }
+
+        $exclude = $configData['exclude'];
+        $columnTypeRules = $configData['columnTypeRules'];
 
         // Get table columns
         $columns = Schema::getColumns($tableName);
@@ -52,19 +77,13 @@ class ValidateTableCommand extends Command
 
             // Add type-specific rules
             $typeName = strtolower($column['type_name']);
-            if (in_array($typeName, ['varchar', 'text', 'char'])) {
-                $rules[] = 'string';
+            if (array_key_exists($typeName, $columnTypeRules)) {
+                $rules[] = $columnTypeRules[$typeName];
+            }
+            if (in_array('string', $rules)) {
                 if (preg_match('/\((\d+)\)/', $column['type'], $matches)) {
                     $rules[] = 'max:' . $matches[1];
                 }
-            } elseif (in_array($typeName, ['int', 'bigint', 'smallint'])) {
-                $rules[] = 'integer';
-            } elseif (in_array($typeName, ['decimal', 'float', 'double'])) {
-                $rules[] = 'numeric';
-            } elseif ($typeName === 'timestamp' || $typeName === 'datetime') {
-                $rules[] = 'date';
-            } elseif ($typeName === 'boolean') {
-                $rules[] = 'boolean';
             }
 
             // Assign rules to the column
@@ -73,7 +92,7 @@ class ValidateTableCommand extends Command
 
         // Output validation array
         $this->info("Validation rules for table '{$tableName}':");
-        $output = str_replace(['":','{','}'], ['" =>','[',']'], json_encode($validationRules, JSON_PRETTY_PRINT));
+        $output = str_replace(['":', '{', '}'], ['" =>', '[', ']'], json_encode($validationRules, JSON_PRETTY_PRINT));
 
         $this->line($output);
     }

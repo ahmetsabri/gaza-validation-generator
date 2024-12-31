@@ -1,2 +1,51 @@
-vendor
-composer.lock
+# Composer dependencies
+/vendor/
+
+/composer.lock
+
+# Laravel specific
+/storage/*
+!/storage/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# Node modules (if using npm/yarn)
+node_modules/
+
+/public/storage
+/public/hot
+/public/mix-manifest.json
+
+# Environment variables
+.env
+.env.*.local
+
+# IDE specific files
+.idea/
+*.iml
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Test coverage reports
+coverage/
+
+# PHPunit specific
+phpunit.xml
+phpunit.xml.dist
+
+# Log files
+*.log
+
+# Cache files
+*.cache
+*.tmp
+
+# Composer backup
+*.bak

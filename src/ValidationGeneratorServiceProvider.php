@@ -2,8 +2,8 @@
 
 namespace Gaza\ValidationGenerator;
 
-use Illuminate\Support\ServiceProvider;
 use Gaza\ValidationGenerator\Console\ValidateTableCommand;
+use Illuminate\Support\ServiceProvider;
 
 class ValidationGeneratorServiceProvider extends ServiceProvider
 {
@@ -22,6 +22,8 @@ class ValidationGeneratorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__ . '/../resources/data/validationGeneratorConfig.json' => resource_path('vendor/gaza-validation-generator/validationGeneratorConfig.json'),
+        ]);
     }
 }
