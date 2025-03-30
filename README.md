@@ -70,18 +70,6 @@ Will output:
 
 ---
 
-## Customization
-
-This package is designed to work out of the box, but you can extend or modify it if needed by publishing the config file.
-
-```bash
-php artisan vendor:publish
-```
-
-Select the `Provider: Gaza\ValidationGenerator\ValidationGeneratorServiceProvider` option. Then edit the `resources/vendor/gaza-validation-generator/validationGeneratorConfig.json` to match your database's column types.
-
----
-
 ## Contributing
 
 Contributions are welcome! Feel free to fork the repository and submit pull requests for improvements.
